@@ -36,6 +36,9 @@ gem 'puppet', puppetversion
 facterversion = ENV.key?('FACTER_GEM_VERSION') ? "#{ENV['FACTER_GEM__VERSION']}" : ['>= 1.7.0']
 gem 'facter', '>= 1.7.0'
 
+ruby_version_segments = Gem::Version.new(RUBY_VERSION.dup).segments
+minor_version = ruby_version_segments[0..1].join('.')
+
 group :development, :acceptance_tests do
   gem 'rake',                    require: false
   gem 'rspec',                   require: false
@@ -48,4 +51,6 @@ group :development, :acceptance_tests do
   gem 'rubocop', '= 0.35.1',     require: false
   gem 'simplecov',               require: false
   gem 'puppet-blacksmith', '~> 3.4', require: false
+  gem "puppet-module-posix-default-r#{minor_version}", require: false, platforms: [:ruby]
+  gem "puppet-module-posix-dev-r#{minor_version}",     require: false, platforms: [:ruby]
 end
